@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="ChunkyTerm:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/ChunkyTerm_jar</output-path>
+    <root id="archive" name="ChunkyTerm.jar">
+      <element id="module-output" name="ChunkyTerm" />
+    </root>
+  </artifact>
+</component>
