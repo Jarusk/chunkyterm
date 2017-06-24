@@ -7,7 +7,9 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="com.google.oauth-client:google-oauth-client:1.20.0" level="project" />
     <orderEntry type="library" name="com.moandjiezana.toml:toml4j:0.7.1" level="project" />
+    <orderEntry type="library" name="com.google.oauth-client:google-oauth-client:1.20.0" level="project" />
+    <orderEntry type="library" name="com.google.http-client:google-http-client-jackson2:1.22.0" level="project" />
+    <orderEntry type="library" name="com.google.oauth-client:google-oauth-client-jetty:1.22.0" level="project" />
   </component>
 </module>

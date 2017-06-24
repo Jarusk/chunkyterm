@@ -15,7 +15,6 @@ import java.io.File;
  *
  * API_KEY = "something"
  * API_SECRET = "something"
- * CALLBACK_URL = "something"
  */
 class Oauth2Credentials {
 
@@ -23,7 +22,8 @@ class Oauth2Credentials {
 
     static String API_KEY = "";
     static String API_SECRET = "";
-    static String CALLBACK_URL = "";
+    static final String DOMAIN = "127.0.0.1";
+    static final int PORT = 8080;
 
     static void loadCredentials() {
 
@@ -32,9 +32,8 @@ class Oauth2Credentials {
             Toml toml = new Toml().read(configFile);
             API_KEY = toml.getString("API_KEY", "");
             API_SECRET = toml.getString("API_SECRET", "");
-            CALLBACK_URL = toml.getString("CALLBACK_URL", "");
 
-            if (API_SECRET.isEmpty() || API_KEY.isEmpty() || CALLBACK_URL.isEmpty()) {
+            if (API_SECRET.isEmpty() || API_KEY.isEmpty() ) {
                 printHelpAndDie();
             }
         }
@@ -48,7 +47,6 @@ class Oauth2Credentials {
         System.out.println("Must have the following form (FitBit API creds):\n");
         System.out.println("API_KEY = \"something\"");
         System.out.println("API_SECRET = \"something\"");
-        System.out.println("CALLBACK_URL = \"something\"");
         System.exit(1);
     }
 }
