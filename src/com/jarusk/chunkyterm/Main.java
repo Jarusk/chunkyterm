@@ -20,6 +20,8 @@ import java.util.Arrays;
 
 public class Main {
 
+    public static final String version = "0.1";
+
     private static final java.io.File DATA_STORE_DIR = new java.io.File(System.getProperty("user.home"),".store/chunkyterm");
     private static FileDataStoreFactory DATA_STORE_FACTORY;
     private static final String[] FITBIT_SCOPE = {"sleep","settings","nutrition","activity","social","heartrate","profile","weight","location"};
@@ -72,12 +74,23 @@ public class Main {
 
     }
 
-    public static void main(String[] args) {
+
+    /**
+     * Generate our authentication token, whether from storage or the interwebs.
+     *
+     * We return a request factory that will include the needed headers when performing a request
+     *
+     * @return A request factory to talk to the FitBit API
+     */
+    private static HttpRequestFactory buildHttpRequestFactory() {
+        HttpRequestFactory requestFactory = null;
+
+        // This chunk will fetch/build our needed credentials for talking to the API
         try {
             DATA_STORE_FACTORY = new FileDataStoreFactory(DATA_STORE_DIR);
             final Credential credential = authorize();
 
-            HttpRequestFactory requestFactory =
+            requestFactory =
                     HTTP_TRANSPORT.createRequestFactory(new HttpRequestInitializer() {
                         @Override
                         public void initialize(HttpRequest httpRequest) throws IOException {
@@ -86,13 +99,32 @@ public class Main {
                         }
                     });
 
-            run(requestFactory);
-
         } catch (IOException e) {
             System.err.println(e.getMessage());
         } catch (Throwable e) {
             e.printStackTrace();
         }
+        return requestFactory;
+    }
+
+    private static void printHelp() {
+        String out = "ChunkyTerm v"+version+"\n";
+        out += "\nUsage: chunky [options]\n\n";
+        out += "\nheart";
+
+
+        System.out.println(out);
+    }
+
+    public static void main(String[] args) {
+
+        if (args.length < 1){
+            //Print out our help info
+            printHelp();
+            System.exit(0);
+        }
+
+        HttpRequestFactory factory = buildHttpRequestFactory();
 
     }
 }
