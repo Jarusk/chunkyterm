@@ -15,10 +15,8 @@ import com.google.api.client.util.Base64;
 import com.google.api.client.util.store.FileDataStoreFactory;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.util.Arrays;
-import java.util.List;
 
 public class Main {
 
