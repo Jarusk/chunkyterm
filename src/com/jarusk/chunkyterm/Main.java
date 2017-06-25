@@ -32,6 +32,7 @@ public class Main {
     private static final String AUTHORIZATION_SERVER_URL = "https://www.fitbit.com/oauth2/authorize";
 
 
+
     /**
      * This will authorize the Java application against the Oauth2 API
      * @return Returns our credentials for Oauth2, whether new or from storage
@@ -70,8 +71,18 @@ public class Main {
         return new AuthorizationCodeInstalledApp(flow,receiver).authorize("user");
     }
 
-    private static void run(HttpRequestFactory requestFactory) throws IOException {
+    private static String run(HttpRequestFactory requestFactory, String url) {
+        GenericUrl tmp = new GenericUrl(url);
+        String result = "";
 
+        try {
+            HttpRequest request = requestFactory.buildGetRequest(tmp);
+            result = request.execute().parseAsString();
+        }catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return result;
     }
 
 
@@ -110,7 +121,7 @@ public class Main {
     private static void printHelp() {
         String out = "ChunkyTerm v"+version+"\n";
         out += "\nUsage: chunky [options]\n\n";
-        out += "\nheart";
+        out += "\nheart  -  print out a graph for the last 12-hours of heart rate\n";
 
 
         System.out.println(out);
@@ -118,13 +129,24 @@ public class Main {
 
     public static void main(String[] args) {
 
-        if (args.length < 1){
+        /*if (args.length < 1){
             //Print out our help info
             printHelp();
             System.exit(0);
-        }
+        }*/
 
         HttpRequestFactory factory = buildHttpRequestFactory();
 
+        String content = run(factory,"https://api.fitbit.com/1/user/-/profile.json");
+        System.out.println(content+"\n\n");
+
+        content = run(factory,"https://api.fitbit.com/1/user/-/body/log/weight/date/2017-06-20.json");
+        System.out.println(content+"\n\n");
+
+        content = run(factory,"https://api.fitbit.com/1/user/-/activities/heart/date/2017-06-24/today/1min.json");
+        System.out.println(content+"\n\n");
+
+        content = run(factory,"https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1min/time/00:00/00:01.json");
+        System.out.println(content+"\n\n");
     }
 }
