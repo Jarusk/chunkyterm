@@ -71,13 +71,13 @@ public class Main {
         return new AuthorizationCodeInstalledApp(flow,receiver).authorize("user");
     }
 
-    private static String run(HttpRequestFactory requestFactory, String url) {
-        GenericUrl tmp = new GenericUrl(url);
-        String result = "";
+    private static FitBitProfile run(HttpRequestFactory requestFactory, String url) {
+        GenericUrl urlObject = new GenericUrl(url);
+        FitBitProfile result = new FitBitProfile();
 
         try {
-            HttpRequest request = requestFactory.buildGetRequest(tmp);
-            result = request.execute().parseAsString();
+            HttpRequest request = requestFactory.buildGetRequest(urlObject);
+            result = request.execute().parseAs(FitBitProfile.class);
         }catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -120,33 +120,44 @@ public class Main {
 
     private static void printHelp() {
         String out = "ChunkyTerm v"+version+"\n";
-        out += "\nUsage: chunky [options]\n\n";
-        out += "\nheart  -  print out a graph for the last 12-hours of heart rate\n";
+        out += "\nUsage: chunky [options]\n\n\nOptions:\n\n";
+        out += "     me  -  print out a summary of the current user\n";
+        out += "  heart  -  print out a graph for the last 12-hours of heart rate\n";
 
 
         System.out.println(out);
     }
 
+    private static void printMePage(HttpRequestFactory factory){
+        FitBitProfile profile = run(factory,FitBitProfile.apiURL);
+
+        System.out.println(profile.user.getAge()+"\n\n");
+    }
+
+    private static void printHeartPage(HttpRequestFactory factory){
+
+    }
+
     public static void main(String[] args) {
 
-        /*if (args.length < 1){
+        if (args.length < 1){
             //Print out our help info
             printHelp();
             System.exit(0);
-        }*/
+        }
 
+        // Build our needed Oauth2 requeset factory
         HttpRequestFactory factory = buildHttpRequestFactory();
 
-        String content = run(factory,"https://api.fitbit.com/1/user/-/profile.json");
-        System.out.println(content+"\n\n");
 
-        content = run(factory,"https://api.fitbit.com/1/user/-/body/log/weight/date/2017-06-20.json");
-        System.out.println(content+"\n\n");
-
-        content = run(factory,"https://api.fitbit.com/1/user/-/activities/heart/date/2017-06-24/today/1min.json");
-        System.out.println(content+"\n\n");
-
-        content = run(factory,"https://api.fitbit.com/1/user/-/activities/heart/date/today/1d/1min/time/00:00/00:01.json");
-        System.out.println(content+"\n\n");
+        // Figure out which page to render to user
+        switch (args[0].toLowerCase()){
+            case "me" :
+                printMePage(factory);
+                break;
+            case "heart":
+                printHeartPage(factory);
+                break;
+        }
     }
 }
