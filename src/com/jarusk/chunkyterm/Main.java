@@ -165,7 +165,7 @@ public class Main {
                 printHeartPage(factory, Arrays.copyOfRange(args,1, args.length));
                 break;
             default:
-                System.out.println("Unrecognized command: "+args[0]+"\n\n");
+                System.out.println("*** Unrecognized command: "+args[0]+" ***\n");
                 printHelp();
         }
     }
