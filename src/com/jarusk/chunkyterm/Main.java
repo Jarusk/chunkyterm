@@ -129,13 +129,19 @@ public class Main {
     }
 
     private static void printMePage(HttpRequestFactory factory){
+        //Fetch our profile
         FitBitProfile profile = run(factory,FitBitProfile.apiURL);
 
-        System.out.println(profile.user.getAge()+"\n\n");
+        String out = "ChunkyTerm v"+version+"\n\n";
+        out += "    Full name: "+profile.user.getFullName()+"\n";
+        out += "          Age: "+profile.user.getAge()+"\n";
+        out += "       Height: "+profile.user.getHeight()+"\n";
+        out += "       Weight: "+profile.user.getWeight()+"\n";
+
+        System.out.println(out);
     }
 
-    private static void printHeartPage(HttpRequestFactory factory){
-
+    private static void printHeartPage(HttpRequestFactory factory, String[] args){
     }
 
     public static void main(String[] args) {
@@ -156,8 +162,11 @@ public class Main {
                 printMePage(factory);
                 break;
             case "heart":
-                printHeartPage(factory);
+                printHeartPage(factory, Arrays.copyOfRange(args,1, args.length));
                 break;
+            default:
+                System.out.println("Unrecognized command: "+args[0]+"\n\n");
+                printHelp();
         }
     }
 }

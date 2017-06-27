@@ -10,7 +10,7 @@ import java.util.List;
 
 public class FitBitUser extends GenericJson {
     @Key
-    private int age;
+    private Integer age;
 
     @Key
     private String avatar;
@@ -22,7 +22,7 @@ public class FitBitUser extends GenericJson {
     private String avatar640;
 
     @Key
-    private int averageDailySteps;
+    private Integer averageDailySteps;
 
     @Key
     private String clockTimeDisplayFormat;
@@ -64,7 +64,7 @@ public class FitBitUser extends GenericJson {
     private String glucoseUnit;
 
     @Key
-    private int height;
+    private Integer height;
 
     @Key
     private String heightUnit;
@@ -83,19 +83,19 @@ public class FitBitUser extends GenericJson {
     private boolean mfaEnabled;
 
     @Key
-    private int offsetFromUTCMillis;
+    private Integer offsetFromUTCMillis;
 
     @Key
     private String startDayOfWeek;
 
     @Key
-    private float strideLengthRunning;
+    private Float strideLengthRunning;
 
     @Key
     private String  strideLengthRunningType;
 
     @Key
-    private float strideLengthWalking;
+    private Float strideLengthWalking;
 
     @Key
     private String strideLengthWalkingType;
@@ -116,14 +116,14 @@ public class FitBitUser extends GenericJson {
     private String waterUnitName;
 
     @Key
-    private float weight;
+    private Float weight;
 
     @Key
     private String weightUnit;
 
 
 
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
@@ -148,5 +148,32 @@ public class FitBitUser extends GenericJson {
 
     public String getFullName() {
         return fullName;
+    }
+
+    public String getHeight() {
+        String out = height.toString();
+        switch (locale.toLowerCase()){
+            case "en_ca":
+                double inches = 0.3937 * height;
+                int feet = (int)(inches/12);
+                inches -= feet*12;
+                out += " cm ("+feet+"'"+String.format("%.1f",inches)+"\")";
+                break;
+            default:
+                out += " inches";
+        }
+        return out;
+    }
+
+    public String getWeight() {
+        String out = weight.toString();
+        switch (locale.toLowerCase()){
+            case "en_ca":
+                out += " kg ("+Math.round(weight*2.2)+" lbs)";
+                break;
+            default:
+                out += " lbs";
+        }
+        return out;
     }
 }
