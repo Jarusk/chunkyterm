@@ -16,7 +16,8 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class Main {
 
@@ -71,20 +72,6 @@ public class Main {
         return new AuthorizationCodeInstalledApp(flow,receiver).authorize("user");
     }
 
-    private static FitBitProfile run(HttpRequestFactory requestFactory, String url) {
-        GenericUrl urlObject = new GenericUrl(url);
-        FitBitProfile result = new FitBitProfile();
-
-        try {
-            HttpRequest request = requestFactory.buildGetRequest(urlObject);
-            result = request.execute().parseAs(FitBitProfile.class);
-        }catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
-
-        return result;
-    }
-
 
     /**
      * Generate our authentication token, whether from storage or the interwebs.
@@ -128,9 +115,23 @@ public class Main {
         System.out.println(out);
     }
 
+    private static String getJsonString(HttpRequestFactory requestFactory, String apiURL) {
+        GenericUrl urlObject = new GenericUrl(apiURL);
+        String result = "";
+
+        try {
+            HttpRequest request = requestFactory.buildGetRequest(urlObject);
+            result = request.execute().parseAsString();
+        }catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+
+        return result;
+    }
+
     private static void printMePage(HttpRequestFactory factory){
         //Fetch our profile
-        FitBitProfile profile = run(factory,FitBitProfile.apiURL);
+        FitBitProfile profile = FitBitProfile.getFitBitProfile(factory);
 
         String out = "ChunkyTerm v"+version+"\n\n";
         out += "    Full name: "+profile.user.getFullName()+"\n";
@@ -141,7 +142,32 @@ public class Main {
         System.out.println(out);
     }
 
+    private static String today(){
+        Calendar today = GregorianCalendar.getInstance();
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+        return ft.format(today.getTime());
+    }
+
+    private static String yesterday(){
+        Calendar c = GregorianCalendar.getInstance();
+        c.add(Calendar.DATE, -1);
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd");
+        return ft.format(c.getTime());
+    }
+
     private static void printHeartPage(HttpRequestFactory factory, String[] args){
+
+        System.out.println("*********************");
+        System.out.println(today());
+        System.out.println(yesterday());
+        System.out.println("*********************");
+        FitBitActivitiesHeart heart = FitBitActivitiesHeart.getFitBitActivitiesHeart(factory);
+
+        List<HeartRateZone> z = heart.acitivitiesHeart.get(0).heartRateZones;
+        System.out.println(heart.acitivitiesHeart.get(0).value);
+        for (int i = 0; i < z.size(); i++) {
+            System.out.println(z.get(i).name);
+        }
     }
 
     public static void main(String[] args) {
