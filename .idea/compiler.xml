@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="ChunkyTerm_main" target="1.8" />
-      <module name="ChunkyTerm_test" target="1.8" />
+      <module name="chunkyterm_main" target="1.8" />
+      <module name="chunkyterm_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
