@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ChunkyTerm.iml" filepath="$PROJECT_DIR$/ChunkyTerm.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ChunkyTerm_main.iml" filepath="$PROJECT_DIR$/.idea/modules/ChunkyTerm_main.iml" group="ChunkyTerm" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/ChunkyTerm_test.iml" filepath="$PROJECT_DIR$/.idea/modules/ChunkyTerm_test.iml" group="ChunkyTerm" />
+    </modules>
+  </component>
+</project>
