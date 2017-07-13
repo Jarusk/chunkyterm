@@ -1,4 +1,4 @@
-package com.jarusk.chunkyterm;
+package chunkyterm;
 
 import com.moandjiezana.toml.Toml;
 

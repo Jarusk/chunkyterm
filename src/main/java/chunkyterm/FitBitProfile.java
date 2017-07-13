@@ -1,4 +1,4 @@
-package com.jarusk.chunkyterm;
+package chunkyterm;
 
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
