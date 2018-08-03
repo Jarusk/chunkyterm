@@ -1,5 +1,8 @@
-apply plugin: 'java'
-apply plugin: 'application'
+plugins {
+    id 'java'
+    id 'application'
+    id "com.github.ben-manes.versions" version "0.20.0"
+}
 
 mainClassName = "chunkyterm.Main"
 version = "0.1.0"
@@ -9,13 +12,14 @@ targetCompatibility = 1.8
 
 repositories {
   mavenCentral()
+  jcenter()
 }
 
 dependencies {
-    compile "com.moandjiezana.toml:toml4j:0.7.1"
-    compile "com.google.oauth-client:google-oauth-client:1.20.0"
-    compile "com.google.http-client:google-http-client-jackson2:1.22.0"
-    compile "com.google.oauth-client:google-oauth-client-jetty:1.22.0"
+    compile "com.moandjiezana.toml:toml4j:0.7.2"
+    compile "com.google.oauth-client:google-oauth-client:1.24.1"
+    compile "com.google.http-client:google-http-client-jackson2:1.24.1"
+    compile "com.google.oauth-client:google-oauth-client-jetty:1.24.1"
 }
 
 jar {
